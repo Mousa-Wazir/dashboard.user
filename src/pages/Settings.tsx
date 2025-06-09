@@ -300,7 +300,7 @@ const Settings = () => {
                       <p className="font-medium">iPhone Safari</p>
                       <p className="text-sm text-muted-foreground">2 hours ago • New York, NY</p>
                     </div>
-                    <button className="text-sm text-destructive hover:text-destructive/80">
+                    <button className="text-destructive hover:text-destructive/80 text-sm, font-semibold py-[8px] mx-0 px-0 text-sm">
                       Sign Out
                     </button>
                   </div>
