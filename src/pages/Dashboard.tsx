@@ -4,8 +4,14 @@ import Layout from '../components/layout/Layout';
 import DashboardCard from '../components/dashboard/DashboardCard';
 import RecentOrders from '../components/dashboard/RecentOrders';
 import { Package, ShoppingCart, Gift, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+  const trackLatestOrder = () => {
+    console.log('Tracking latest order');
+    // This would typically open a modal or navigate to order tracking
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -49,18 +55,30 @@ const Dashboard = () => {
           <div className="bg-card border border-border rounded-lg p-6">
             <h3 className="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
             <div className="space-y-3">
-              <button className="w-full text-left p-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+              <Link 
+                to="/products"
+                className="block w-full text-left p-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+              >
                 Continue Shopping
-              </button>
-              <button className="w-full text-left p-3 border border-border rounded-md hover:bg-accent transition-colors">
+              </Link>
+              <button 
+                onClick={trackLatestOrder}
+                className="w-full text-left p-3 border border-border rounded-md hover:bg-accent transition-colors"
+              >
                 Track Latest Order
               </button>
-              <button className="w-full text-left p-3 border border-border rounded-md hover:bg-accent transition-colors">
+              <Link 
+                to="/wishlist"
+                className="block w-full text-left p-3 border border-border rounded-md hover:bg-accent transition-colors"
+              >
                 View Wishlist
-              </button>
-              <button className="w-full text-left p-3 border border-border rounded-md hover:bg-accent transition-colors">
+              </Link>
+              <Link 
+                to="/rewards"
+                className="block w-full text-left p-3 border border-border rounded-md hover:bg-accent transition-colors"
+              >
                 Redeem Rewards
-              </button>
+              </Link>
             </div>
           </div>
         </div>
