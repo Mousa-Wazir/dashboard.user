@@ -41,10 +41,10 @@ const Wishlist = () => {
       <div className="flex-col md:flex-row md:justify-between text-sm, font-semibold max-w-full ">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">My Wishlist</h1>
+            <h1 className="font-bold text-foreground text-xs">My Wishlist</h1>
             <p className="text-muted-foreground mt-1">{wishlistItems.length} items saved</p>
           </div>
-          <button className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">
+          <button className="lg:text-lg md:text-base text-xs">
             Add All to Cart
           </button>
         </div>
@@ -83,7 +83,7 @@ const Wishlist = () => {
                 <div className="flex gap-2 mt-4">
                   <button onClick={() => addToCart(item.id)} disabled={!item.inStock} className={`flex-1 flex items-center justify-center space-x-2 py-2 px-3 rounded-md transition-colors ${item.inStock ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-muted text-muted-foreground cursor-not-allowed'}`}>
                     <ShoppingCart className="h-4 w-4" />
-                    <span className="text-sm">{item.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
+                    <span className="text-xs md:text-base lg:text-lg ">{item.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
                   </button>
                   <button onClick={() => removeFromWishlist(item.id)} className="p-2 border border-border rounded-md hover:bg-accent transition-colors">
                     <Trash2 className="h-4 w-4 text-muted-foreground" />
