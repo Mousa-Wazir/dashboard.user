@@ -44,7 +44,7 @@ const Wishlist = () => {
             <h1 className="text-sm md:text-base lg:text-lg">My Wishlist</h1>
             <p className="text-muted-foreground mt-1">{wishlistItems.length} items saved</p>
           </div>
-          <button className="lg:text-lg md:text-base text-xs">
+          <button className="lg:text-lg md:text-base bg-slate-950 hover:bg-slate-800 text-slate-50 rounded-sm font-normal text-xs">
             Add All to Cart
           </button>
         </div>
