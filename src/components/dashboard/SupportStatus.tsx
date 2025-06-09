@@ -1,51 +1,65 @@
-
 import React from 'react';
 import { MessageCircle, Clock, CheckCircle, AlertCircle } from 'lucide-react';
-
 const SupportStatus = () => {
-  const tickets = [
-    {
-      id: '#SUP-001',
-      subject: 'Order delivery issue',
-      status: 'responded',
-      lastUpdate: '2 hours ago',
-      priority: 'high'
-    },
-    {
-      id: '#SUP-002',
-      subject: 'Payment method question',
-      status: 'pending',
-      lastUpdate: '1 day ago',
-      priority: 'medium'
-    }
-  ];
-
+  const tickets = [{
+    id: '#SUP-001',
+    subject: 'Order delivery issue',
+    status: 'responded',
+    lastUpdate: '2 hours ago',
+    priority: 'high'
+  }, {
+    id: '#SUP-002',
+    subject: 'Payment method question',
+    status: 'pending',
+    lastUpdate: '1 day ago',
+    priority: 'medium'
+  }];
   const getStatusInfo = (status: string) => {
     switch (status) {
       case 'pending':
-        return { icon: Clock, color: 'text-yellow-600', bg: 'bg-yellow-100', text: 'Pending' };
+        return {
+          icon: Clock,
+          color: 'text-yellow-600',
+          bg: 'bg-yellow-100',
+          text: 'Pending'
+        };
       case 'responded':
-        return { icon: MessageCircle, color: 'text-blue-600', bg: 'bg-blue-100', text: 'Responded' };
+        return {
+          icon: MessageCircle,
+          color: 'text-blue-600',
+          bg: 'bg-blue-100',
+          text: 'Responded'
+        };
       case 'closed':
-        return { icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-100', text: 'Closed' };
+        return {
+          icon: CheckCircle,
+          color: 'text-green-600',
+          bg: 'bg-green-100',
+          text: 'Closed'
+        };
       default:
-        return { icon: AlertCircle, color: 'text-gray-600', bg: 'bg-gray-100', text: 'Unknown' };
+        return {
+          icon: AlertCircle,
+          color: 'text-gray-600',
+          bg: 'bg-gray-100',
+          text: 'Unknown'
+        };
     }
   };
-
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'border-l-red-500';
-      case 'medium': return 'border-l-yellow-500';
-      case 'low': return 'border-l-green-500';
-      default: return 'border-l-gray-500';
+      case 'high':
+        return 'border-l-red-500';
+      case 'medium':
+        return 'border-l-yellow-500';
+      case 'low':
+        return 'border-l-green-500';
+      default:
+        return 'border-l-gray-500';
     }
   };
-
   if (tickets.length === 0) return null;
-
-  return (
-    <div className="bg-card border border-border rounded-lg p-6 animate-fade-in">
+  return <div className="flex-col md:flex-row md:justify-between text-sm, font-semibold w-full ">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-card-foreground flex items-center">
           <MessageCircle className="h-5 w-5 mr-2 text-primary" />
@@ -55,15 +69,10 @@ const SupportStatus = () => {
       </div>
 
       <div className="space-y-3">
-        {tickets.map((ticket) => {
-          const statusInfo = getStatusInfo(ticket.status);
-          const StatusIcon = statusInfo.icon;
-          
-          return (
-            <div
-              key={ticket.id}
-              className={`p-4 border-l-4 rounded-r-lg bg-accent/20 hover:bg-accent/40 transition-all duration-300 hover:scale-[1.01] cursor-pointer ${getPriorityColor(ticket.priority)}`}
-            >
+        {tickets.map(ticket => {
+        const statusInfo = getStatusInfo(ticket.status);
+        const StatusIcon = statusInfo.icon;
+        return <div key={ticket.id} className={`p-4 border-l-4 rounded-r-lg bg-accent/20 hover:bg-accent/40 transition-all duration-300 hover:scale-[1.01] cursor-pointer ${getPriorityColor(ticket.priority)}`}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className={`p-2 rounded-full ${statusInfo.bg}`}>
@@ -82,9 +91,8 @@ const SupportStatus = () => {
                   <p className="text-xs text-muted-foreground mt-1">{ticket.lastUpdate}</p>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            </div>;
+      })}
       </div>
 
       <div className="mt-4 pt-4 border-t border-border">
@@ -92,8 +100,6 @@ const SupportStatus = () => {
           View All Support Tickets
         </button>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default SupportStatus;
