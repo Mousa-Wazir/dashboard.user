@@ -419,7 +419,7 @@ const Settings = () => {
 
           {/* Settings Content */}
           <div className="lg:col-span-3">
-            <div className="bg-card border border-border rounded-lg p-6">
+            <div className="bg-card border border-border rounded-lg p-6 flex-col md:flex-row md:justify-between text-sm, font-semibold w-full ">
               {renderTabContent()}
               
               <div className="flex justify-end space-x-3 mt-6 pt-6 border-t border-border">
