@@ -1,9 +1,7 @@
-
 import React, { useState } from 'react';
 import Layout from '../components/layout/Layout';
 import { User, MapPin, CreditCard, Globe, Palette, Shield, Camera, Upload, Crop } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');
   const [profileImage, setProfileImage] = useState('/placeholder.svg');
@@ -13,32 +11,45 @@ const Settings = () => {
     sms: false,
     push: true
   });
-
-  const tabs = [
-    { id: 'profile', name: 'Profile', icon: User },
-    { id: 'addresses', name: 'Addresses', icon: MapPin },
-    { id: 'payment', name: 'Payment', icon: CreditCard },
-    { id: 'preferences', name: 'Preferences', icon: Globe },
-    { id: 'appearance', name: 'Appearance', icon: Palette },
-    { id: 'security', name: 'Security', icon: Shield }
-  ];
-
+  const tabs = [{
+    id: 'profile',
+    name: 'Profile',
+    icon: User
+  }, {
+    id: 'addresses',
+    name: 'Addresses',
+    icon: MapPin
+  }, {
+    id: 'payment',
+    name: 'Payment',
+    icon: CreditCard
+  }, {
+    id: 'preferences',
+    name: 'Preferences',
+    icon: Globe
+  }, {
+    id: 'appearance',
+    name: 'Appearance',
+    icon: Palette
+  }, {
+    id: 'security',
+    name: 'Security',
+    icon: Shield
+  }];
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         setProfileImage(e.target?.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
-
   const renderTabContent = () => {
     switch (activeTab) {
       case 'profile':
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <h3 className="text-lg font-semibold">Profile Information</h3>
             
             {/* Profile Image Section */}
@@ -47,17 +58,12 @@ const Settings = () => {
                 <AvatarImage src={profileImage} alt="Profile" />
                 <AvatarFallback className="text-2xl">SJ</AvatarFallback>
               </Avatar>
-              <div className="space-y-2">
+              <div className="flex-col md:flex-row md:justify-between text-sm, font-semibold w-full ">
                 <div className="flex space-x-2">
                   <label className="cursor-pointer bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors text-sm flex items-center space-x-2">
                     <Upload className="h-4 w-4" />
                     <span>Upload Photo</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      className="hidden"
-                    />
+                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                   </label>
                   <button className="border border-border px-4 py-2 rounded-md hover:bg-accent transition-colors text-sm flex items-center space-x-2">
                     <Crop className="h-4 w-4" />
@@ -73,51 +79,28 @@ const Settings = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-2">First Name</label>
-                <input 
-                  type="text" 
-                  defaultValue="Sarah"
-                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+                <input type="text" defaultValue="Sarah" className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring" />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Last Name</label>
-                <input 
-                  type="text" 
-                  defaultValue="Johnson"
-                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+                <input type="text" defaultValue="Johnson" className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring" />
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium mb-2">Email</label>
-                <input 
-                  type="email" 
-                  defaultValue="sarah.johnson@email.com"
-                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+                <input type="email" defaultValue="sarah.johnson@email.com" className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring" />
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium mb-2">Phone</label>
-                <input 
-                  type="tel" 
-                  defaultValue="+1 (555) 123-4567"
-                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+                <input type="tel" defaultValue="+1 (555) 123-4567" className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring" />
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium mb-2">Bio</label>
-                <textarea 
-                  rows={3}
-                  placeholder="Tell us about yourself..."
-                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+                <textarea rows={3} placeholder="Tell us about yourself..." className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring" />
               </div>
             </div>
-          </div>
-        );
-
+          </div>;
       case 'payment':
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-semibold">Payment Methods</h3>
               <button className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">
@@ -187,42 +170,24 @@ const Settings = () => {
                 <p className="text-muted-foreground text-sm">Standard Chartered Bank</p>
               </div>
             </div>
-          </div>
-        );
-
+          </div>;
       case 'appearance':
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <h3 className="text-lg font-semibold">Appearance</h3>
             
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-3">Theme</label>
                 <div className="grid grid-cols-3 gap-3">
-                  <button
-                    onClick={() => setTheme('light')}
-                    className={`p-4 border-2 rounded-lg transition-colors ${
-                      theme === 'light' ? 'border-primary bg-primary/10' : 'border-border'
-                    }`}
-                  >
+                  <button onClick={() => setTheme('light')} className={`p-4 border-2 rounded-lg transition-colors ${theme === 'light' ? 'border-primary bg-primary/10' : 'border-border'}`}>
                     <div className="w-full h-12 bg-white border border-gray-200 rounded mb-2"></div>
                     <span className="text-sm font-medium">Light</span>
                   </button>
-                  <button
-                    onClick={() => setTheme('dark')}
-                    className={`p-4 border-2 rounded-lg transition-colors ${
-                      theme === 'dark' ? 'border-primary bg-primary/10' : 'border-border'
-                    }`}
-                  >
+                  <button onClick={() => setTheme('dark')} className={`p-4 border-2 rounded-lg transition-colors ${theme === 'dark' ? 'border-primary bg-primary/10' : 'border-border'}`}>
                     <div className="w-full h-12 bg-gray-900 border border-gray-700 rounded mb-2"></div>
                     <span className="text-sm font-medium">Dark</span>
                   </button>
-                  <button
-                    onClick={() => setTheme('system')}
-                    className={`p-4 border-2 rounded-lg transition-colors ${
-                      theme === 'system' ? 'border-primary bg-primary/10' : 'border-border'
-                    }`}
-                  >
+                  <button onClick={() => setTheme('system')} className={`p-4 border-2 rounded-lg transition-colors ${theme === 'system' ? 'border-primary bg-primary/10' : 'border-border'}`}>
                     <div className="w-full h-12 bg-gradient-to-r from-white to-gray-900 border border-gray-400 rounded mb-2"></div>
                     <span className="text-sm font-medium">System</span>
                   </button>
@@ -241,12 +206,7 @@ const Settings = () => {
               <div>
                 <label className="block text-sm font-medium mb-2">Accent Color</label>
                 <div className="flex space-x-2">
-                  {['blue', 'green', 'purple', 'red', 'orange'].map((color) => (
-                    <button
-                      key={color}
-                      className={`w-8 h-8 rounded-full border-2 border-white shadow-md bg-${color}-500`}
-                    />
-                  ))}
+                  {['blue', 'green', 'purple', 'red', 'orange'].map(color => <button key={color} className={`w-8 h-8 rounded-full border-2 border-white shadow-md bg-${color}-500`} />)}
                 </div>
               </div>
 
@@ -260,12 +220,9 @@ const Settings = () => {
                 </label>
               </div>
             </div>
-          </div>
-        );
-
+          </div>;
       case 'security':
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <h3 className="text-lg font-semibold">Security & Privacy</h3>
             
             <div className="space-y-6">
@@ -300,34 +257,28 @@ const Settings = () => {
                   <div className="flex items-center justify-between">
                     <span>Email Notifications</span>
                     <label className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        checked={notifications.email}
-                        onChange={(e) => setNotifications({...notifications, email: e.target.checked})}
-                        className="rounded border-border" 
-                      />
+                      <input type="checkbox" checked={notifications.email} onChange={e => setNotifications({
+                      ...notifications,
+                      email: e.target.checked
+                    })} className="rounded border-border" />
                     </label>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>SMS Notifications</span>
                     <label className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        checked={notifications.sms}
-                        onChange={(e) => setNotifications({...notifications, sms: e.target.checked})}
-                        className="rounded border-border" 
-                      />
+                      <input type="checkbox" checked={notifications.sms} onChange={e => setNotifications({
+                      ...notifications,
+                      sms: e.target.checked
+                    })} className="rounded border-border" />
                     </label>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Push Notifications</span>
                     <label className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        checked={notifications.push}
-                        onChange={(e) => setNotifications({...notifications, push: e.target.checked})}
-                        className="rounded border-border" 
-                      />
+                      <input type="checkbox" checked={notifications.push} onChange={e => setNotifications({
+                      ...notifications,
+                      push: e.target.checked
+                    })} className="rounded border-border" />
                     </label>
                   </div>
                 </div>
@@ -370,12 +321,9 @@ const Settings = () => {
                 </div>
               </div>
             </div>
-          </div>
-        );
-
+          </div>;
       case 'addresses':
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-semibold">Saved Addresses</h3>
               <button className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">
@@ -409,12 +357,9 @@ const Settings = () => {
                 </div>
               </div>
             </div>
-          </div>
-        );
-
+          </div>;
       case 'preferences':
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <h3 className="text-lg font-semibold">Preferences</h3>
             <div className="space-y-4">
               <div>
@@ -444,20 +389,14 @@ const Settings = () => {
                 </select>
               </div>
             </div>
-          </div>
-        );
-
+          </div>;
       default:
-        return (
-          <div className="text-center py-8">
+        return <div className="text-center py-8">
             <p className="text-muted-foreground">Settings for {activeTab} coming soon...</p>
-          </div>
-        );
+          </div>;
     }
   };
-
-  return (
-    <Layout>
+  return <Layout>
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Settings</h1>
@@ -468,23 +407,13 @@ const Settings = () => {
           {/* Settings Navigation */}
           <div className="lg:col-span-1">
             <nav className="space-y-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors text-left ${
-                      activeTab === tab.id
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-muted-foreground hover:text-primary hover:bg-accent'
-                    }`}
-                  >
+              {tabs.map(tab => {
+              const Icon = tab.icon;
+              return <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors text-left ${activeTab === tab.id ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-primary hover:bg-accent'}`}>
                     <Icon className="h-4 w-4" />
                     <span>{tab.name}</span>
-                  </button>
-                );
-              })}
+                  </button>;
+            })}
             </nav>
           </div>
 
@@ -505,8 +434,6 @@ const Settings = () => {
           </div>
         </div>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Settings;
