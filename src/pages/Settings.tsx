@@ -285,7 +285,7 @@ const Settings = () => {
               </div>
 
               {/* Login Sessions */}
-              <div className="border border-border rounded-lg p-4">
+              <div className="border border-border rounded-lg p-4 flex-col text-sm, font-semibold d:flex-row md:justify-between w-full ">
                 <h4 className="font-medium mb-3">Active Sessions</h4>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
