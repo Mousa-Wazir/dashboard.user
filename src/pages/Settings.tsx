@@ -181,7 +181,7 @@ const Settings = () => {
                 <div className="grid grid-cols-3 gap-3">
                   <button onClick={() => setTheme('light')} className={`p-4 border-2 rounded-lg transition-colors ${theme === 'light' ? 'border-primary bg-primary/10' : 'border-border'}`}>
                     <div className="w-full h-12 bg-white border border-gray-200 rounded mb-2"></div>
-                    <span className="text-sm font-medium">Light</span>
+                    <span className="text-left -translate-y-2 ">Light</span>
                   </button>
                   <button onClick={() => setTheme('dark')} className={`p-4 border-2 rounded-lg transition-colors ${theme === 'dark' ? 'border-primary bg-primary/10' : 'border-border'}`}>
                     <div className="w-full h-12 bg-gray-900 border border-gray-700 rounded mb-2"></div>
@@ -189,7 +189,7 @@ const Settings = () => {
                   </button>
                   <button onClick={() => setTheme('system')} className={`p-4 border-2 rounded-lg transition-colors ${theme === 'system' ? 'border-primary bg-primary/10' : 'border-border'}`}>
                     <div className="w-full h-12 bg-gradient-to-r from-white to-gray-900 border border-gray-400 rounded mb-2"></div>
-                    <span className="text-sm font-medium">System</span>
+                    <span className="text-sm py-0 my-0 mx-0 px-0 font-medium">System</span>
                   </button>
                 </div>
               </div>
@@ -399,7 +399,7 @@ const Settings = () => {
   return <Layout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Settings</h1>
+          <h1 className="font-bold text-foreground text-2xl">Settings</h1>
           <p className="text-muted-foreground mt-1">Manage your account preferences</p>
         </div>
 
