@@ -41,7 +41,7 @@ const Wishlist = () => {
       <div className="flex-col md:flex-row md:justify-between text-sm, font-semibold max-w-full ">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="font-bold text-foreground text-xs">My Wishlist</h1>
+            <h1 className="text-sm md:text-base lg:text-lg">My Wishlist</h1>
             <p className="text-muted-foreground mt-1">{wishlistItems.length} items saved</p>
           </div>
           <button className="lg:text-lg md:text-base text-xs">
