@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Bell, User, Search, ShoppingCart, X, Menu } from 'lucide-react';
+import { Bell, User, Search, ShoppingCart, X, Menu, LayoutDashboard, Package, Heart, Gift, Settings, HelpCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Drawer, DrawerContent, DrawerClose, DrawerOverlay } from '@/components/ui/drawer';
@@ -12,6 +12,17 @@ const navItems = [
   { name: 'About Us', path: '/about' },
 ];
 
+// Dashboard routers/links (same as in Sidebar)
+const dashboardItems = [
+  { name: 'Dashboard', path: '/', icon: LayoutDashboard },
+  { name: 'My Orders', path: '/orders', icon: Package },
+  { name: 'Cart', path: '/cart', icon: ShoppingCart },
+  { name: 'Wishlist', path: '/wishlist', icon: Heart },
+  { name: 'Rewards', path: '/rewards', icon: Gift },
+  { name: 'Settings', path: '/settings', icon: Settings },
+  { name: 'Help', path: '/help', icon: HelpCircle },
+];
+
 interface HeaderProps {
   cartItemCount?: number;
 }
@@ -19,7 +30,12 @@ interface HeaderProps {
 const Header = ({ cartItemCount = 3 }: HeaderProps) => {
   const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
+
+  // State for site navigation Drawer (main nav)
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // State for dashboard routers Drawer (secondary hamburger)
+  const [dashboardDrawerOpen, setDashboardDrawerOpen] = useState(false);
 
   const notifications = [
     { id: 1, message: "Your order #1234 has been shipped", time: "2 hours ago", type: "order" },
@@ -33,8 +49,17 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
     <header className="bg-white border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 relative w-full">
-          {/* Left side: Hamburger + Logo */}
+          {/* Left: TWO hamburgers on mobile, logo */}
           <div className="flex items-center w-fit">
+            {/* DASHBOARD hamburger - only on mobile */}
+            <button
+              className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors mr-1"
+              aria-label="Open dashboard routes"
+              onClick={() => setDashboardDrawerOpen(true)}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+            {/* NAV hamburger - only on mobile */}
             <button
               className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors mr-2"
               aria-label="Open navigation menu"
@@ -42,6 +67,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
             >
               <Menu className="h-6 w-6" />
             </button>
+            {/* Logo */}
             <div className="flex items-center">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
                 <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 mr-1">
@@ -149,7 +175,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
         </div>
       </div>
 
-      {/* Drawer for mobile navigation */}
+      {/* Drawer for main (site) navigation (mobile) */}
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} shouldScaleBackground>
         <DrawerOverlay />
         <DrawerContent className="p-0">
@@ -200,8 +226,52 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
           </div>
         </DrawerContent>
       </Drawer>
+
+      {/* Drawer for DASHBOARD routers - mobile only */}
+      <Drawer open={dashboardDrawerOpen} onOpenChange={setDashboardDrawerOpen} shouldScaleBackground>
+        <DrawerOverlay />
+        <DrawerContent className="p-0 max-w-xs w-full">
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+              <div className="flex items-center">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-2">
+                  <LayoutDashboard className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <span className="text-xl font-bold text-primary">Dashboard</span>
+              </div>
+              <DrawerClose asChild>
+                <button className="p-2 rounded-md hover:bg-accent transition-colors">
+                  <X className="h-6 w-6" />
+                </button>
+              </DrawerClose>
+            </div>
+            <nav className="flex flex-col gap-1 mt-3 mb-6 px-5">
+              {dashboardItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`flex items-center px-3 py-3 rounded-md text-base font-medium transition-colors space-x-3 ${
+                      isActive(item.path)
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                    }`}
+                    onClick={() => setDashboardDrawerOpen(false)}
+                  >
+                    <Icon className="h-5 w-5 mr-2" />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </header>
   );
 };
 
 export default Header;
+
+// ... file is now very long, consider refactoring after this change
