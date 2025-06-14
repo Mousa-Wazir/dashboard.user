@@ -33,7 +33,6 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
     <header className="bg-white border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 relative w-full">
-
           {/* Left side: Hamburger + Logo */}
           <div className="flex items-center w-fit">
             <button
@@ -45,7 +44,6 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
             </button>
             <div className="flex items-center">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
-                {/* SVG logo */}
                 <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 mr-1">
                   <rect x="2" y="8" width="28" height="16" rx="6" fill="#1E2572"/>
                   <circle cx="16" cy="16" r="5" fill="#fff"/>
@@ -58,7 +56,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
             </div>
           </div>
 
-          {/* Middle: Nav (hidden on mobile) */}
+          {/* Nav: Desktop only */}
           <nav className="hidden md:flex space-x-8 ml-8">
             {navItems.map((item) => (
               <Link
@@ -104,7 +102,6 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 </span>
               )}
             </Link>
-
             {/* Notifications */}
             <div className="relative">
               <button 
@@ -175,6 +172,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
               </DrawerClose>
             </div>
             <nav className="flex flex-col gap-1 mt-3 mb-6 px-5">
+              {/* Mobile nav: always visible here, never in header */}
               {navItems.map((item) => (
                 <Link
                   key={item.name}
