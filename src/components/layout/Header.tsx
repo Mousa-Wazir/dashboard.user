@@ -12,7 +12,6 @@ const navItems = [
   { name: 'About Us', path: '/about' },
 ];
 
-// Dashboard routers/links (same as in Sidebar)
 const dashboardItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
   { name: 'My Orders', path: '/orders', icon: Package },
@@ -31,11 +30,8 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
   const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
 
-  // State for site navigation Drawer (main nav)
+  // State for combined Drawer (main + dashboard) for mobile
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  // State for dashboard routers Drawer (secondary hamburger)
-  const [dashboardDrawerOpen, setDashboardDrawerOpen] = useState(false);
 
   const notifications = [
     { id: 1, message: "Your order #1234 has been shipped", time: "2 hours ago", type: "order" },
@@ -49,24 +45,8 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
     <header className="bg-white border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 relative w-full">
-          {/* Left: TWO hamburgers on mobile, logo */}
+          {/* Logo and nav: left */}
           <div className="flex items-center w-fit">
-            {/* DASHBOARD hamburger - only on mobile */}
-            <button
-              className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors mr-1"
-              aria-label="Open dashboard routes"
-              onClick={() => setDashboardDrawerOpen(true)}
-            >
-              <Menu className="h-6 w-6" />
-            </button>
-            {/* NAV hamburger - only on mobile */}
-            <button
-              className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors mr-2"
-              aria-label="Open navigation menu"
-              onClick={() => setDrawerOpen(true)}
-            >
-              <Menu className="h-6 w-6" />
-            </button>
             {/* Logo */}
             <div className="flex items-center">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
@@ -80,30 +60,29 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 Localena
               </Link>
             </div>
-          </div>
-
-          {/* Nav: Desktop only */}
-          <nav className="hidden md:flex space-x-8 ml-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`px-3 py-2 text-sm font-medium transition-colors rounded-md ${
-                  isActive(item.path)
-                    ? 'text-primary bg-primary/10'
-                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
-                }`}
+            {/* Desktop nav */}
+            <nav className="hidden md:flex space-x-8 ml-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`px-3 py-2 text-sm font-medium transition-colors rounded-md ${
+                    isActive(item.path)
+                      ? 'text-primary bg-primary/10'
+                      : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <button
+                onClick={() => console.log('Logout clicked')}
+                className="text-sm px-2 text-destructive hover:underline ml-2"
               >
-                {item.name}
-              </Link>
-            ))}
-            <button
-              onClick={() => console.log('Logout clicked')}
-              className="text-sm px-2 text-destructive hover:underline ml-2"
-            >
-              Logout
-            </button>
-          </nav>
+                Logout
+              </button>
+            </nav>
+          </div>
 
           {/* Right side: Actions */}
           <div className="flex items-center space-x-1 sm:space-x-4 ml-auto">
@@ -116,10 +95,10 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             </div>
-            {/* Cart */}
+            {/* Cart & Notifications: Desktop only */}
             <Link
               to="/cart"
-              className="relative p-2 text-muted-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
+              className="relative p-2 text-muted-foreground hover:text-primary hover:bg-accent rounded-md transition-colors hidden md:inline-flex"
             >
               <ShoppingCart className="h-5 w-5" />
               {cartItemCount > 0 && (
@@ -128,8 +107,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 </span>
               )}
             </Link>
-            {/* Notifications */}
-            <div className="relative">
+            <div className="relative hidden md:block">
               <button 
                 onClick={() => setShowNotifications(!showNotifications)}
                 className="p-2 text-muted-foreground hover:text-primary hover:bg-accent rounded-md transition-colors relative"
@@ -161,8 +139,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 </div>
               )}
             </div>
-
-            {/* User Profile */}
+            {/* User Profile (always visible) */}
             <div className="flex items-center space-x-2">
               <Avatar className="h-8 w-8">
                 <AvatarImage src="/placeholder.svg" alt="User" />
@@ -171,25 +148,29 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 </AvatarFallback>
               </Avatar>
             </div>
+            {/* Hamburger: only visible on mobile, moves to right */}
+            <button
+              className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors ml-2"
+              aria-label="Open combined menu"
+              onClick={() => setDrawerOpen(true)}
+            >
+              <Menu className="h-7 w-7" />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Drawer for main (site) navigation (mobile) */}
+      {/* Combined Drawer for mobile: dashboard links + nav links + cart + notifications */}
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} shouldScaleBackground>
         <DrawerOverlay />
-        <DrawerContent className="p-0">
+        <DrawerContent className="p-0 max-w-xs w-full">
           <div className="flex flex-col">
             <div className="flex items-center justify-between px-5 py-4 border-b border-border">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-2">
-                  <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6">
-                    <rect x="2" y="8" width="28" height="16" rx="6" fill="#1E2572"/>
-                    <circle cx="16" cy="16" r="5" fill="#fff"/>
-                  </svg>
-                  <span className="text-primary-foreground font-bold text-sm hidden">L</span>
+                  <LayoutDashboard className="w-6 h-6 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold text-primary">Localena</span>
+                <span className="text-xl font-bold text-primary">Dashboard</span>
               </div>
               <DrawerClose asChild>
                 <button className="p-2 rounded-md hover:bg-accent transition-colors">
@@ -197,8 +178,28 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 </button>
               </DrawerClose>
             </div>
-            <nav className="flex flex-col gap-1 mt-3 mb-6 px-5">
-              {/* Mobile nav: always visible here, never in header */}
+            <nav className="flex flex-col gap-1 mt-3 px-5">
+              {/* Dashboard main links */}
+              {dashboardItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`flex items-center px-3 py-3 rounded-md text-base font-medium transition-colors space-x-3 ${
+                      isActive(item.path)
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                    }`}
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    <Icon className="h-5 w-5 mr-2" />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+              <div className="border-t my-3"></div>
+              {/* Main nav items */}
               {navItems.map((item) => (
                 <Link
                   key={item.name}
@@ -223,48 +224,56 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 Logout
               </button>
             </nav>
-          </div>
-        </DrawerContent>
-      </Drawer>
-
-      {/* Drawer for DASHBOARD routers - mobile only */}
-      <Drawer open={dashboardDrawerOpen} onOpenChange={setDashboardDrawerOpen} shouldScaleBackground>
-        <DrawerOverlay />
-        <DrawerContent className="p-0 max-w-xs w-full">
-          <div className="flex flex-col">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-              <div className="flex items-center">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-2">
-                  <LayoutDashboard className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <span className="text-xl font-bold text-primary">Dashboard</span>
-              </div>
-              <DrawerClose asChild>
-                <button className="p-2 rounded-md hover:bg-accent transition-colors">
-                  <X className="h-6 w-6" />
+            <div className="border-t my-3"></div>
+            {/* Cart & Notification in mobile drawer */}
+            <div className="flex gap-4 px-5 py-4">
+              {/* Cart */}
+              <Link
+                to="/cart"
+                className="relative p-2 text-muted-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
+                onClick={() => setDrawerOpen(false)}
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                )}
+              </Link>
+              {/* Notifications */}
+              <div className="relative">
+                <button 
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="p-2 text-muted-foreground hover:text-primary hover:bg-accent rounded-md transition-colors relative"
+                >
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                    {notifications.length}
+                  </span>
                 </button>
-              </DrawerClose>
+                {showNotifications && (
+                  <div className="absolute right-0 mt-2 w-80 bg-white border border-border rounded-lg shadow-lg z-50 animate-fade-in">
+                    <div className="flex items-center justify-between p-4 border-b border-border">
+                      <h3 className="font-semibold">Notifications</h3>
+                      <button 
+                        onClick={() => setShowNotifications(false)}
+                        className="p-1 hover:bg-accent rounded"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <div className="max-h-64 overflow-y-auto">
+                      {notifications.map((notification) => (
+                        <div key={notification.id} className="p-3 border-b border-border last:border-b-0 hover:bg-accent/50 transition-colors">
+                          <p className="text-sm text-foreground">{notification.message}</p>
+                          <p className="text-xs text-muted-foreground mt-1">{notification.time}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-            <nav className="flex flex-col gap-1 mt-3 mb-6 px-5">
-              {dashboardItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={`flex items-center px-3 py-3 rounded-md text-base font-medium transition-colors space-x-3 ${
-                      isActive(item.path)
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-muted-foreground hover:text-primary hover:bg-accent'
-                    }`}
-                    onClick={() => setDashboardDrawerOpen(false)}
-                  >
-                    <Icon className="h-5 w-5 mr-2" />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-            </nav>
           </div>
         </DrawerContent>
       </Drawer>
@@ -275,3 +284,4 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
 export default Header;
 
 // ... file is now very long, consider refactoring after this change
+
