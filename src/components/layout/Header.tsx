@@ -32,33 +32,34 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
   return (
     <header className="bg-white border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 relative">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
-              {/* SVG logo added for more professional look */}
-              <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 mr-1">
-                <rect x="2" y="8" width="28" height="16" rx="6" fill="#1E2572"/>
-                <circle cx="16" cy="16" r="5" fill="#fff"/>
-              </svg>
-              <span className="text-primary-foreground font-bold text-sm hidden sm:inline">L</span>
+        <div className="flex items-center justify-between h-16 relative w-full">
+
+          {/* Left side: Hamburger + Logo */}
+          <div className="flex items-center w-fit">
+            <button
+              className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors mr-2"
+              aria-label="Open navigation menu"
+              onClick={() => setDrawerOpen(true)}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
+                {/* SVG logo */}
+                <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 mr-1">
+                  <rect x="2" y="8" width="28" height="16" rx="6" fill="#1E2572"/>
+                  <circle cx="16" cy="16" r="5" fill="#fff"/>
+                </svg>
+                <span className="text-primary-foreground font-bold text-sm hidden sm:inline">L</span>
+              </div>
+              <Link to="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">
+                Localena
+              </Link>
             </div>
-            <Link to="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">
-              Localena
-            </Link>
           </div>
 
-          {/* Hamburger Menu Icon for mobile */}
-          <button
-            className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors"
-            aria-label="Open navigation menu"
-            onClick={() => setDrawerOpen(true)}
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-
-          {/* Navigation (desktop only) */}
-          <nav className="hidden md:flex space-x-8">
+          {/* Middle: Nav (hidden on mobile) */}
+          <nav className="hidden md:flex space-x-8 ml-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -80,8 +81,8 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
             </button>
           </nav>
 
-          {/* Right side actions */}
-          <div className="flex items-center space-x-1 sm:space-x-4">
+          {/* Right side: Actions */}
+          <div className="flex items-center space-x-1 sm:space-x-4 ml-auto">
             {/* Search (hidden on xs) */}
             <div className="hidden sm:block relative">
               <input
@@ -138,7 +139,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
               )}
             </div>
 
-            {/* User Profile (always visible) */}
+            {/* User Profile */}
             <div className="flex items-center space-x-2">
               <Avatar className="h-8 w-8">
                 <AvatarImage src="/placeholder.svg" alt="User" />
