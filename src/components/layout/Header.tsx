@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Bell, User, Search, ShoppingCart, X, Menu, LayoutDashboard, Package, Heart, Gift, Settings, HelpCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -30,7 +29,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
   const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
 
-  // State for combined Drawer (main + dashboard) for mobile
+  // Only one drawer/hamburger for main nav, dashboard links removed from here
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const notifications = [
@@ -151,7 +150,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
             {/* Hamburger: only visible on mobile, moves to right */}
             <button
               className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors ml-2"
-              aria-label="Open combined menu"
+              aria-label="Open menu"
               onClick={() => setDrawerOpen(true)}
             >
               <Menu className="h-7 w-7" />
@@ -160,7 +159,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
         </div>
       </div>
 
-      {/* Combined Drawer for mobile: dashboard links + nav links + cart + notifications */}
+      {/* Drawer for mobile: main navigation only */}
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} shouldScaleBackground>
         <DrawerOverlay />
         <DrawerContent className="p-0 max-w-xs w-full">
@@ -170,7 +169,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-2">
                   <LayoutDashboard className="w-6 h-6 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold text-primary">Dashboard</span>
+                <span className="text-xl font-bold text-primary">Menu</span>
               </div>
               <DrawerClose asChild>
                 <button className="p-2 rounded-md hover:bg-accent transition-colors">
@@ -179,26 +178,6 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
               </DrawerClose>
             </div>
             <nav className="flex flex-col gap-1 mt-3 px-5">
-              {/* Dashboard main links */}
-              {dashboardItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={`flex items-center px-3 py-3 rounded-md text-base font-medium transition-colors space-x-3 ${
-                      isActive(item.path)
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-muted-foreground hover:text-primary hover:bg-accent'
-                    }`}
-                    onClick={() => setDrawerOpen(false)}
-                  >
-                    <Icon className="h-5 w-5 mr-2" />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-              <div className="border-t my-3"></div>
               {/* Main nav items */}
               {navItems.map((item) => (
                 <Link
@@ -282,6 +261,3 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
 };
 
 export default Header;
-
-// ... file is now very long, consider refactoring after this change
-

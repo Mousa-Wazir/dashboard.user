@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -27,21 +26,13 @@ const sidebarItems = [
 
 const Sidebar = () => {
   const location = useLocation();
-  const isMobile = useIsMobile();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
-  // Mobile, show Drawer with a hamburger menu externally, so the sidebar remains hidden on mobile
-  if (isMobile) {
-    // Sidebar drawer should generally be triggered externally (e.g. from a Header). 
-    // Optionally returning null means only Header-triggered sidebar nav.
-    return null;
-  }
-
   return (
-    <aside className="bg-white border-r border-border w-64 min-h-screen hidden md:block transition-all duration-300">
-      <div className="p-6">
+    <aside className="bg-white border-r border-border w-64 min-h-screen block transition-all duration-300 fixed top-0 left-0 z-40 h-full">
+      <div className="p-6 pt-24 md:pt-6">
         {/* User Widget for dashboard, sidebar */}
         <div className="flex items-center gap-2 mb-7">
           <div className="inline-flex items-center justify-center w-11 h-11 border-2 border-primary rounded-full bg-accent">
