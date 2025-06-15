@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -14,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerOverlay, DrawerClose, DrawerTrigger } from '@/components/ui/drawer';
 import { useIsMobile } from '@/hooks/use-mobile';
+import AnimatedHamburger from "@/components/ui/AnimatedHamburger";
 
 const sidebarItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
@@ -36,14 +36,13 @@ const Sidebar = () => {
   if (isMobile) {
     return (
       <>
-        {/* Sidebar hamburger only for dashboard links, fixed on left */}
-        <button
-          className="fixed top-4 left-4 z-50 p-2 rounded-md bg-accent border border-border text-muted-foreground shadow-lg"
+        {/* More attractive Sidebar hamburger, fixed on left */}
+        <AnimatedHamburger
+          open={drawerOpen}
           onClick={() => setDrawerOpen(true)}
           aria-label="Open dashboard menu"
-        >
-          <Menu className="h-7 w-7" />
-        </button>
+          className="fixed top-4 left-4 z-50"
+        />
         <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} shouldScaleBackground>
           <DrawerOverlay />
           <DrawerContent className="p-0 max-w-xs w-full">
@@ -56,10 +55,13 @@ const Sidebar = () => {
                 <div className="text-xs text-muted-foreground">Shopping enthusiast</div>
               </div>
               <DrawerClose asChild>
-                <button className="ml-auto p-1 rounded hover:bg-muted transition">
-                  <span className="sr-only">Close</span>
-                  &times;
-                </button>
+                {/* Use AnimatedHamburger as a close button with "X" state */}
+                <AnimatedHamburger
+                  open={true}
+                  onClick={() => setDrawerOpen(false)}
+                  aria-label="Close dashboard menu"
+                  className="ml-auto"
+                />
               </DrawerClose>
             </div>
             <nav className="space-y-2 mt-2 px-6">
@@ -71,8 +73,8 @@ const Sidebar = () => {
                     to={item.path}
                     className={`flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                       isActive(item.path)
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-primary hover:bg-accent"
                     }`}
                     onClick={() => setDrawerOpen(false)}
                   >

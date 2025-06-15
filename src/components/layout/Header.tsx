@@ -3,6 +3,7 @@ import { Bell, User, Search, ShoppingCart, X, Menu, LayoutDashboard, Package, He
 import { Link, useLocation } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Drawer, DrawerContent, DrawerClose, DrawerOverlay } from '@/components/ui/drawer';
+import AnimatedHamburger from "@/components/ui/AnimatedHamburger";
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -147,19 +148,19 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 </AvatarFallback>
               </Avatar>
             </div>
-            {/* Hamburger: only visible on mobile, moves to right */}
-            <button
-              className="md:hidden p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors ml-2"
-              aria-label="Open menu"
-              onClick={() => setDrawerOpen(true)}
-            >
-              <Menu className="h-7 w-7" />
-            </button>
+            {/* Responsive hamburger (main nav, right side on mobile) */}
+            <span className="md:hidden ml-2">
+              <AnimatedHamburger
+                open={drawerOpen}
+                onClick={() => setDrawerOpen(true)}
+                aria-label="Open main menu"
+              />
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Drawer for mobile: main navigation only (Sidebar/triggers now in Sidebar.tsx) */}
+      {/* Drawer for mobile: main navigation only */}
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} shouldScaleBackground>
         <DrawerOverlay />
         <DrawerContent className="p-0 max-w-xs w-full">
@@ -172,9 +173,12 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
                 <span className="text-xl font-bold text-primary">Menu</span>
               </div>
               <DrawerClose asChild>
-                <button className="p-2 rounded-md hover:bg-accent transition-colors">
-                  <X className="h-6 w-6" />
-                </button>
+                {/* AnimatedHamburger as X (drawer close) */}
+                <AnimatedHamburger
+                  open={true}
+                  onClick={() => setDrawerOpen(false)}
+                  aria-label="Close main menu"
+                />
               </DrawerClose>
             </div>
             <nav className="flex flex-col gap-1 mt-3 px-5">
