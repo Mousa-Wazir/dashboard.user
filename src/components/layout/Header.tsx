@@ -29,7 +29,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
   const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
 
-  // Only one drawer/hamburger for main nav, dashboard links removed from here
+  // Only one drawer/hamburger for main nav (Dashboard sidebar now handled separately)
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const notifications = [
@@ -159,7 +159,7 @@ const Header = ({ cartItemCount = 3 }: HeaderProps) => {
         </div>
       </div>
 
-      {/* Drawer for mobile: main navigation only */}
+      {/* Drawer for mobile: main navigation only (Sidebar/triggers now in Sidebar.tsx) */}
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} shouldScaleBackground>
         <DrawerOverlay />
         <DrawerContent className="p-0 max-w-xs w-full">
